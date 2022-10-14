@@ -1,0 +1,214 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}EMSHOP | Carinho de Compras{% endblock title %}
+
+{% block content %}
+    {% if messages %}
+        {% for menssagem in messages %}
+            <div class="notification is-toast bg-danger">{{ menssagem }}</div>
+        {% endfor %}
+
+    {% endif %}
+    <!-- Shoping Cart Section Begin -->
+    <section class="shoping-cart spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    {% if carinho %}
+                        <div class="shoping__cart__table">
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th class="shoping__product">Produto</th>
+                                    <th>Preço</th>
+                                    <th>Quantidade</th>
+                                    <th>Total</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for item in carinho %}
+                                    <tr>
+                                    <td class="shoping__cart__item">
+                                        <img src="{{ item.produto.get_thumbnail }}" alt="{{ item.produto.titulo }}">
+                                        <a href="{% url 'produto' item.produto.categoria.slug item.produto.slug %}">
+                                            <h5>{{ item.produto.titulo }}</h5></a>
+                                    </td>
+                                    <td class="shoping__cart__price">
+                                        {{ item.produto.preco|floatformat:2 }} MZN
+                                    </td>
+                                    <td class="shoping__cart__quantity">
+                                        {{ item.quantidade }}
+                                        <a href="?mudar_quantidade={{ item.id }}&quantidade=-1">-</a>
+                                        <a href="?mudar_quantidade={{ item.id }}&quantidade=1">+</a>
+                                    </td>
+                                    <td class="shoping__cart__total">
+                                        {{ item.preco_total|floatformat:2 }} MZN
+                                    </td>
+                                    <td class="shoping__cart__item__close">
+                                        <a href="?remover_do_carinho={{ item.id }}" class="apagar"> <span
+                                                class="icon_close"></span></a>
+                                    </td>
+                                {% endfor %}
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    {% else %}
+                        <div class="container py-4 ">
+                            <div class="row"></div>
+                            <p class="display-4 text-center text-dark">Não Tem Nenhum Produto</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="shoping__cart__btns">
+                        <a href="{% url 'loja' %}" class="primary-btn cart-btn-danger">Continuar a Comprar</a>
+
+                    </div>
+                </div>
+
+                <!-- Checkout Section Begin -->
+                <section class="checkout spad">
+                    <div class="container">
+
+                        <div class="checkout__form">
+                            <h4>Detalhes da Compra</h4>
+                            <form method="post" action="." id="formulario-de-pagamento">
+                                <div class="row">
+                                    <div class="col-lg-8 col-md-6">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="checkout__input">
+                                                    <p>Nome<span>*</span></p>
+                                                    <input type="text">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="checkout__input">
+                                                    <p>Apelido<span>*</span></p>
+                                                    <input type="text">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="checkout__input">
+                                            <p>Bairro<span>*</span></p>
+                                            <input type="text" placeholder="Bairro/Zona" class="checkout__input__add">
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="checkout__input">
+                                                    <p>Telefone<span>*</span></p>
+                                                    <input type="text">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="checkout__input">
+                                                    <p>Email<span>*</span></p>
+                                                    <input type="text">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-6">
+                                                <div class="checkout__input" id="card-element">
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="col-lg-4 col-md-6">
+                                        <div class="checkout__order">
+                                            <h4>Sua Compra</h4>
+                                            <div class="checkout__order__products">Productos <span>Total</span></div>
+                                            <ul>
+                                                {% for item in carinho %}
+                                                    <li>{{ item.produto.titulo }}<span>{{ item.produto.preco|floatformat:2 }} MZN</span>
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                            <div class="checkout__order__subtotal">Subtotal
+                                                <span>{{ carinho.get_custo_total|floatformat:2 }} MZN</span></div>
+                                            <div class="checkout__order__total">Total
+                                                <span>{{ carinho.get_custo_total|floatformat:2 }} MZN</span></div>
+
+                                            <p>Após Processar o Seu Pedido Receberá Indicações para receber a sua
+                                                Encomenda</p>
+                                            <div class="checkout__input__checkbox">
+                                                <label for="payment">
+                                                    M-pesa
+                                                    <input type="checkbox" id="payment">
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                            <div class="checkout__input__checkbox">
+                                                <label for="emola">
+                                                    E-mola
+                                                    <input type="checkbox" id="emola">
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                            <div class="checkout__input__checkbox">
+                                                <label for="contamovel">
+                                                    Conta Móvel
+                                                    <input type="checkbox" id="contamovel">
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                        <button class="site-btn">Processar Pedido</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </section>
+                <!-- Checkout Section End -->
+
+
+            </div>
+        </div>
+    </section>
+    <!-- Shoping Cart Section End -->
+
+{% endblock content %}
+
+{% block scripts %}
+    <script src="https://js.stripe.com/v3/"></script>
+    <script>
+        const stripe = Stripe('{{ stripe_pub_key }}');
+        const elements = stripe.elements();
+
+        card = elements.create('card');
+        card.mount('#card-element');
+        const form = document.getElementById('formulario-de-pagamento');
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+            stripe.createToken(card).then(function (result) {
+                if (result.error) {
+                    const errorElement = document.getElementById('card-errors');
+                    errorElement.textContent = result.error.message;
+                } else {
+                    stripeTokenHandler(result.token);
+                }
+            });
+        });
+
+        function stripeTokenHandler(token) {
+            const form = document.getElementById('formulario-de-pagamento');
+            const hiddenInput = document.createElement('input');
+            hiddenInput.setAttribute('type', 'hidden');
+            hiddenInput.setAttribute('name', 'stripe_token');
+            hiddenInput.setAttribute('value', token.id);
+            form.appendChild(hiddenInput);
+        }
+    </script>
+
+{% endblock scripts %}

@@ -1,0 +1,35 @@
+<div class="sidebar__item">
+    <div class="latest-product__text">
+        <h4>Novidades</h4>
+        <div class="latest-product__slider owl-carousel">
+            <div class="latest-prdouct__slider__item">
+                {% for produto in produtos_recentes %}
+                    <a href="{% url 'produto' produto.categoria.slug produto.slug %}"
+                       class="latest-product__item">
+                        <div class="latest-product__item__pic">
+                            <img src="{{ produto.get_thumbnail }}" alt="">
+                        </div>
+                        <div class="latest-product__item__text">
+                            <h6>{{ produto.titulo }}</h6>
+                            <span>{{ produto.preco|floatformat:2 }} MZN</span>
+                        </div>
+                    </a>
+                {% endfor %}
+
+            </div>
+            <div class="latest-prdouct__slider__item">
+                {% for produto in ultimos_produtos %}
+                    <a href="#" class="latest-product__item">
+                        <div class="latest-product__item__pic">
+                            <img src="{{ produto.get_thumbnail }}" alt="">
+                        </div>
+                        <div class="latest-product__item__text">
+                            <h6>{{ produto.titulo }}</h6>
+                            <span>{{ produto.preco|floatformat:2 }} MZN</span>
+                        </div>
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>

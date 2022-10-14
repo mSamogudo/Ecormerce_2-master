@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ produto.titulo }}{% endblock title %}
+
+{% block content %}
+
+    <!-- Breadcrumb Section Begin -->
+    <section class="breadcrumb-section set-bg" data-setbg="{% static 'imagens/breadcrumb.jpg' %}">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb__text">
+                        <h2>{{ produto.titulo }}</h2>
+                        <div class="breadcrumb__option">
+                            <a href="{% url 'inicio' %}">Inicio</a>
+                            <a href="{% url 'loja' %}">{{ produto.categoria.titulo }}</a>
+                            <span>{{ produto.titulo }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Breadcrumb Section End -->
+
+    <!-- Product Details Section Begin -->
+    <section class="product-details spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6">
+                    <div class="product__details__pic">
+                        <div class="product__details__pic__item">
+                            <img class="product__details__pic__item--large"
+                                 src="{{ produto.imagem.url }}" alt="">
+                        </div>
+                        <div class="product__details__pic__slider owl-carousel">
+                            <img data-imgbigurl="{{ produto.imagem.url }}"
+                                 src="{{ produto.imagem.url }}" alt="{{ produto.titulo }}">
+                            <img data-imgbigurl="{{ produto.imagem.url }}"
+                                 src="{{ produto.imagem.url }}" alt="{{ produto.titulo }}">
+                            <img data-imgbigurl="{{ produto.imagem.url }}"
+                                 src="{{ produto.imagem.url }}" alt="{{ produto.titulo }}">
+                            <img data-imgbigurl="{{ produto.imagem.url }}"
+                                 src="{{ produto.imagem.url }}" alt="{{ produto.titulo }}">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <div class="product__details__text">
+                        <h3>{{ produto.titulo }}</h3>
+                        <div class="product__details__rating">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star-half-o"></i>
+                            <span>(18 reviews)</span>
+                        </div>
+                        <div class="product__details__price">{{ produto.preco|floatformat:2 }} MZN</div>
+                        <p>{{ produto.descricao|slice:500 }}</p>
+                        {% if messages %}
+                            {% for menssagem in messages %}
+                                <div class="notification is-toast bg-{{ menssagem.tags }}">{{ menssagem }}</div>
+                            {% endfor %}
+
+                        {% endif %}
+                        <form method="post" action=".">
+                            {% csrf_token %}
+                            <div class="product__details__quantity">
+                                <div class="quantity">
+                                    <div class="pro-qty">
+                                        <label>
+                                            <input type="number" name="quantidade" value="1" class="input" min="1">
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button  class="btn btn-outline-danger">
+                                Adicionar ao Carinho
+                            </button>
+
+                        </form>
+
+                        <ul>
+                            <li><b>Disponibilidade</b> <span>In Stock</span></li>
+                            <li><b>Comerciante</b> <span><samp>{{ produto.comerciante }}</samp></span></li>
+                            <li><b>Categoria</b> <span>{{ produto.categoria }}</span></li>
+                            <li><b>Partilhar Em</b>
+                                <div class="share">
+                                    <a href="#"><i class="fa fa-facebook"></i></a>
+                                    <a href="#"><i class="fa fa-twitter"></i></a>
+                                    <a href="#"><i class="fa fa-instagram"></i></a>
+                                    <a href="#"><i class="fa fa-pinterest"></i></a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <!-- Product Details Section End -->
+    {% if produtos_iguais %}
+        <!-- Related Product Section Begin -->
+        <section class="related-product">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="section-title related__product__title">
+                            <h2>Produtos Relacionados</h2>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    {% for produto_igual in produtos_iguais %}
+
+                        <div class="col-lg-3 col-md-4 col-sm-6">
+                            <div class="product__item">
+                                <div class="product__item__pic set-bg" data-setbg="{{ produto_igual.imagem.url }}">
+                                    <ul class="product__item__pic__hover">
+                                        <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-retweet"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                    </ul>
+                                </div>
+                                <div class="product__item__text">
+                                    <h6>
+                                        <a href="{% url 'produto' produto_igual.categoria.slug produto_igual.slug %}">{{ produto_igual.titulo }}</a>
+                                    </h6>
+                                    <h5>{{ produto_igual.preco|floatformat:2 }} MZN</h5>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+    {% endif %}
+    <!-- Related Product Section End -->
+
+{% endblock content %}

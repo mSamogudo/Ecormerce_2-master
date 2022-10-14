@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load crispy_forms_filters %}
+{% load static %}
+
+{% block title %}EM-SHOP | Cadastro {% endblock title %}
+
+{% block content %}
+    {% load crispy_forms_tags %}
+    {% if form.errors %}
+        <p class="text-light">Usuário e Senha são Incorrectos! Tente Novamente</p>
+    {% endif %}
+
+    <!--Register-->
+    <div class="container py-4 ">
+        <div class="row"></div>
+        <h2 class="text-center text-dark">Cadastro do Comerciante</h2>
+        <form method="POST" class="row-cols-1 col-md-5 align-content-center align-content-between">
+            {% csrf_token %}
+            {{ registrar|crispy }}
+            <button class="btn btn-success" type="submit">Cadastrar</button>
+        </form>
+        <p class="text-center">Já possui uma Conta? <a href="{% url 'entrar' %}">Entrar</a></p>
+    </div>
+{% endblock %}

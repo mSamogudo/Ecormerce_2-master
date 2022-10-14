@@ -1,0 +1,39 @@
+PART I:
+    - (FEITO) Criar um ambiente virtual e activar(venv).
+    - (FEITO) Instalar Django e criar um Projecto(Ecomerce).
+    - (FEITO) Criar uma Aplicação Loja e adiciona-la nas Installed Apps(loja).
+    - (FEITO) Adicionar uma Página Inicial
+    - (FEITO) Adicionar os Ficheiros Estáticos(css/js/sass)
+
+    - (FEITO) Criar Aplicação para Comerciante e adicionar nas Installed Apps(comerciante).
+    - (FEITO) Criar Base de Dados model para Vendedores(comerciante)
+    - (FEITO) Criar um Formulário para Cadastro do Comerciante(cadastro)
+    - (FEITO) Criar uma Área de Trabalho para o Comerciante(para teste)
+
+    - (FEITO) Tornar Possível Entrar e Sair do Sistema.
+
+    - (FEITO) Criar Aplicação e Base de Dados para Produtos e Categorias.
+    - (FEITO) Mostrar os Produtos na Área de Administração.
+    - (FEITO) Tornar possível os Comerciantes Adicionarem Produtos.
+
+    - (FEITO) Mostrar os Produtos mais Recentes(loja).
+    - (FEITO) Mostrar detalhes de um Produto(detalhes_do_Produto)
+    - (FEITO) Mostrar Categorias(categorias)
+    - (FEITO) Criar uma Busca Simples
+
+PART II:
+     - (FEITO) Tornar Possível adicionar Produtos ao Carinho.
+     - (FEITO) Criar uma View e template para Carinho.
+     - (FEITO) Tornar Possível Remover Produtos do Carinho
+     - (FEITO) Tornar Possível Actualizar a quantidade
+
+     - (FEITO) Criar nova App e Model para Compras(compras)
+     - Tornar Possível Efectuar Pagamento
+     - Criar uma Página de Sucesso
+
+     - Mostrar Compras na Area do Comerciante
+     - Tornar Possível Editar o Comerciante
+     - Notificar o Comerciante depois da Compra
+
+     - Mostrar uma lista de Comerciantes
+     - Tornar Possível ver todos Produtos de um Comerciante

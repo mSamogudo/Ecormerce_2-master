@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}EM-SHOP | Painel de Administração {% endblock title %}
+{% block content %}
+
+    <div class="container py-4 ">
+        <div class="row"></div>
+        <h5 class="display-5 text-right text-dark"><strong>Entrou como:</strong> {{ comerciante.nome }}</h5>
+        <h5 class="display-5 text-right text-dark"><strong>Produtos:</strong> {{ quantidade_de_produtos }}</h5>
+        <h5 class="display-5 text-right text-dark"><strong>Total:</strong> {{ total_produtos_disponiveis|floatformat:2 }} MZN</h5>
+    </div>
+    <hr>
+    <!-- Pannel de Admin Section Begin -->
+    <section class="shoping-cart spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    {% if produtos %}
+                        <div class="shoping__cart__table">
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th class="shoping__product">Produto</th>
+                                    <th>Categoria</th>
+                                    <th>Preço</th>
+                                    <th>Quantidade</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    {% for produto in produtos %}
+                                <tr>
+                                    <td class="shoping__cart__item">
+                                        <img src="{{ produto.imagem.thumb.url }}" alt="">
+                                        <h5>{{ produto.titulo }}</h5>
+                                    </td>
+                                    <td class="shoping__cart__price">
+                                        {{ produto.categoria }}
+                                    </td>
+                                    <td class="shoping__cart__price">
+                                        {{ produto.preco|floatformat:2 }} MZN
+                                    </td>
+                                    <td class="shoping__cart__quantity">
+                                        <div class="quantity">
+                                            <div class="pro-qty">
+                                                <label>
+                                                    <input type="text" value="1">
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    
+                                    <td class="shoping__cart__item__close">
+                                        <span class="icon_close"></span>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <div class="container py-4 ">
+                            <div class="row"></div>
+                            <p class="h4 text-center text-dark">Não Tem Nenhum Produto</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="shoping__cart__btns">
+                        <a href="{% url 'adicionar_produto' %}" class="primary-btn cart-btn">Adicionar Produto</a>
+                        <a href="#" class="primary-btn cart-btn cart-btn-right"><span class="icon_loading"></span>
+                            Upadate Cart</a>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="shoping__checkout">
+                        <h5>Total de Produtos Disponíveis</h5>
+                        <ul>
+                            <ul>
+                            <li>Quantidade <span>{{ quantidade_de_produtos }}</span></li>
+                            <li>Subtotal <span>{{ total_produtos_disponiveis|floatformat:2 }} MZN</span></li>
+                            <li>Total <span>{{ total_produtos_disponiveis|floatformat:2 }} MZN</span></li>
+                        </ul>
+                        </ul>
+                        <a href="#" class="primary-btn">...</a>
+                    </div>
+                </div>
+
+                 <div class="col-lg-6">
+                    <div class="shoping__checkout">
+                        <h5>Total de Produtos Vendidos</h5>
+                        <ul>
+                            <li>Quantidade <span>{{ quantidade_de_produtos }}</span></li>
+                            <li>Subtotal <span>{{ total_produtos_disponiveis|floatformat:2 }} MZN</span></li>
+                            <li>Total <span>{{ total_produtos_disponiveis|floatformat:2 }} MZN</span></li>
+                        </ul>
+                        <a href="#" class="primary-btn">...</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Shoping Cart Section End -->
+{% endblock %}
